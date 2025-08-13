@@ -1,0 +1,88 @@
+
+# Activar RewriteEngine
+RewriteEngine on
+<IfModule mime_module>
+  AddHandler application/x-httpd-ea-php71 .php
+</IfModule>
+DirectoryIndex index.php
+# asegurar htaccess
+ <Files .htaccess>
+ order allow,deny
+ deny from all
+ </Files>
+RewriteCond %{HTTPS} !=on
+RewriteRule ^.*$ https://%{SERVER_NAME}%{REQUEST_URI} [R,L]
+ErrorDocument 404 /404.html
+IndexIgnore *
+Options All -Indexes
+
+<IfModule mod_speling.c>
+ CheckSpelling On
+</IfModule>
+# Restricted access to files
+<FilesMatch "((\.(lock|cache|db))|CHANGELOG.md|README.md|^(.*\.config|.*\.example)(.*?))$">
+	# Apache < 2.3
+	<IfModule !mod_authz_core.c>
+		Order allow,deny
+		Deny from all
+		Satisfy All
+	</IfModule>
+
+	# Apache ≥ 2.3
+	<IfModule mod_authz_core.c>
+		Require all denied
+	</IfModule>
+</FilesMatch>
+#RewriteBase / 
+RewriteCond %{SCRIPT_FILENAME} !-d
+RewriteCond %{SCRIPT_FILENAME} !-f
+ 
+
+RewriteRule ^sitemap\.xml/?$ sitemap.php
+RewriteRule ^as    /sistemaas/as.php? [L]
+RewriteRule ^nosotros$    /page/nosotros.php? [L,NC]
+
+RewriteRule ^politica-de-privacidad$    page/politica-de-privacidad.php? [L,NC]
+
+RewriteRule ^contacto$    /page/contacto.php? [L,NC]
+
+RewriteRule ^Cursos-y-diplomados$    /page/cursos-y-diplomados.php? [L,NC]
+
+RewriteRule ^cursos-virtuales$    /page/cursos-virtuales.php? [L,NC]
+
+RewriteRule ^noticias$    /page/noticias.php? [L,NC]
+
+RewriteRule ^programas$    /page/programas.php? [L,NC]
+
+RewriteRule ^pre-inscripcion$    /page/pre-inscripcion-digital.php? [L,NC]
+
+RewriteRule ^requisitos$    /page/requisitos-pre-inscripcion.php? [L,NC]
+
+RewriteRule ^noticias/([a-zA-Z0-9-]+)$    /page/noticia.php?nombrenoticia=$1
+
+RewriteRule ^([a-zA-Z0-9-]+)$    /page/programa.php?nombrecurso=$1
+
+ExpiresActive On
+ExpiresByType image/gif A432000
+ExpiresByType image/jpg A432000
+ExpiresByType image/jpeg A432000
+ExpiresByType image/png A432000
+ExpiresByType image/ico A432000
+ExpiresByType image/bmp A432000
+ExpiresByType text/css A432000
+ExpiresByType text/javascript A432000
+ExpiresByType application/javascript A432000
+ExpiresByType application/x-javascript A432000
+ExpiresByType video/mp4 A432000
+ExpiresByType application/x-font-ttf A432000
+ExpiresByType font/opentype A432000
+ExpiresByType application/x-font-woff A432000
+ExpiresByType image/svg+xml A432000
+ExpiresByType application/vnd.ms-fontobject A432000
+ExpiresByType text/css A432000                 
+
+#RewriteRule ^/programa.php$ /page/programa.php?
+
+# php -- BEGIN cPanel-generated handler, do not edit
+# This domain inherits the “PHP” package.
+# php -- END cPanel-generated handler, do not edit
